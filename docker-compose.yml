@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: nginx
+    networks:
+      - frontend_network
+    ports:
+      - "80:80"
+
+  backend:
+    build: /Users/jakubhoffmann/Desktop/devopszad2/backend-files
+    networks:
+      - frontend_network
+      - backend_network
+    ports:
+      - "3000:3000"
+
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: mydatabase 
+    networks:
+      - backend_network
+
+
+networks:
+  frontend_network:
+    driver: bridge
+  backend_network:
+    driver: bridge
